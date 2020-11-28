@@ -1,0 +1,43 @@
+1.Scope:
+    Python variables are scoped to the innermost function, class, 
+    or module in which they're assigned. Control blocks like if
+    and while blocks don't count, so a variable assigned inside an 
+    if is still scoped to a function, class, or module.
+
+2.Global:
+    Use global x to use a global variable inside a local function
+
+3.Function
+    List are mutable. they are passed by reference
+
+    So, do rebounding  with newlist=oldlist.copy()
+     https://stackoverflow.com/questions/986006/how-do-i-pass-a-variable-by-reference
+
+    String are immutable . they are passed by argument  
+
+
+4.List copying
+    new_list = list[:]
+    new_list= list.copy()
+
+5.Passing list in class instance also changes list  values
+
+6.use self for using class variables inside class methods
+    https://www.digitalocean.com/community/tutorials/understanding-class-and-instance-variables-in-python-3
+    check this for get the correct idea of using class and instance variables
+
+
+    a.
+        class can use functions of that py file
+
+    b.
+        takes 3 positional arguments but 4 were given
+        use self as function argument here. self means this object that you're calling
+7. __main__
+    if __name__ == '__main__'
+    # write code to be executed only on direct execution, but not on import
+    # This is because direct execution assigns `'__main__'` to `__name__`
+     while import of any way assigns the name under which it is imported.
+
+
+
