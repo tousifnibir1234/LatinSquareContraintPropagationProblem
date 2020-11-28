@@ -8,10 +8,12 @@ class forwardChecking:
         self.varDomain={}
         self.initialList()
         self.failNumber = 0
+        self.nodeCount=0
+
 
         self.solveGame(self.game,self.varDomain)
         self.printTheGame(self.game)
-        self.nodeCount=0
+        print('node count',self.nodeCount)
 
         
 
@@ -74,6 +76,7 @@ class forwardChecking:
             print( k,v)
 
     def solveGame(self,game,varDomain):
+        self.nodeCount+=1
         l=[0,0]
         if not (self.empty_checker(game,l)):
             print('return of empty chek')
@@ -81,10 +84,11 @@ class forwardChecking:
         row = l[0]
         colum = l[1]
 
-        print('coming for ',l)
+        print('\n\ncoming for ',l)
         dictinput=copy.deepcopy(varDomain)
 
         temp=varDomain.get((row,colum))
+        checkerForDomain=-1000
         for num in temp:
             #for num in  range(1, self.gameSize +1 ):
 
@@ -113,18 +117,27 @@ class forwardChecking:
             varDomain.pop((row,colum))
             print('after the popof ownself')
             self.printVarDomain(varDomain)
+            print ('        now the game is ')
+            self.printTheGame(game)
 
             for v in varDomain.values():
                 if v.__len__()== 0:
                     print('empty is found')
 
-                    #varDomain = copy.deepcopy(dictinput)            
-                    #game[row][colum]= 0
-                    return False
+                    varDomain = copy.deepcopy(dictinput)            
+                    print('returning from inner loop')
+                    checkerForDomain=1
+                    game[row][colum]= 0
+                    break
                     #return false will be added here
-
+            if checkerForDomain == 1:
+                print('continuing for next')
+                checkerForDomain=-1000
+                continue
             if self.solveGame(game,varDomain):
                 return  True
+
+            print('for backtracking current is ' , row, colum)
             varDomain = copy.deepcopy(dictinput)            
             self.printVarDomain(varDomain)
             print (         'finishing gotcha temp is ',temp)
