@@ -29,6 +29,40 @@ def empty_checker(game,l):
                 return True
     
     return False
+def Brelazempty_checker(game,l):
+        global gameSize
+        tupleList=[]
+        for r in range( gameSize):
+            for c in range( gameSize):
+                if(game[r][c]==0):
+                    ls= [row[c] for row in game]
+                    mxf= game[r].count(0)+ ls.count(0)-2
+                    #print(mxf ,'for ',r,c)
+                    domain= domain_getter(game,r,c)
+                    tupleList.append( (domain,(r,c),mxf))
+
+        tupleList.sort()
+        #->print(tupleList)
+        if(tupleList.__len__()==0):
+            return False
+        else:
+            #->print(tupleList.__len__())
+            
+            #->print('the min is',l)
+            lowest=tupleList[0][0]
+
+            #print('\n',tupleList)
+
+            #print(lowest)
+            p=[item  for item in tupleList if item[0]==lowest  ]
+            #print(p)
+
+            p.sort(key=lambda  x: x[2],reverse=True)
+            #print('after sorting  p ',p)
+            l[0]=p[0][1][0]
+            l[1]=p[0][1][1]
+
+            return True   
 
 
 def SDFempty_checker(game,l):
@@ -43,14 +77,14 @@ def SDFempty_checker(game,l):
     
 
     tupleList.sort()
-    print(tupleList)
+    # print(tupleList)
     if(tupleList.__len__()==0):
         return False
     else:
-        print(tupleList.__len__())
+        # print(tupleList.__len__())
         l[0]=tupleList[0][1][0]
         l[1]=tupleList[0][1][1]
-        print('the min is',l)
+        # print('the min is',l)
         return True   
            
     
@@ -77,9 +111,10 @@ def isSafe(game,r,c,num):
 def solveGame(game):
     global gameSize,consistencyChecking,failNumber
     consistencyChecking+=1
+    print(consistencyChecking)
 
     l=[0,0]
-    if not (SDFempty_checker(game,l)):
+    if not (empty_checker(game,l)):
         return True
     row = l[0]
     colum = l[1]
@@ -91,12 +126,11 @@ def solveGame(game):
             if solveGame(game):
                 return  True
            # printTheGame(game)
-            failNumber+=1
             game[row][colum]= 0
-        else:
-            failNumber+=1
+        
+            
     
-
+    failNumber+=1
     return False
 
 
@@ -122,16 +156,16 @@ def main():
 
     problemInput('test.txt')
     
-    # if not solveGame(game):
-    #     print('not solvable')
-    # else:
-    #     print('solved')
-    #     print(f'consistencyChecking is {consistencyChecking}')
-    #     print(f'failNumber is {failNumber}')
+    if not solveGame(game):
+        print('not solvable')
+    else:
+        print('solved')
+        print(f'Node Number is {consistencyChecking}')
+        print(f'Backtrack is {failNumber}')
 
-    #     printTheGame(game)
+        printTheGame(game)
 
-    fcheck=forwardChecking(game,gameSize)
+    # fcheck=forwardChecking(game,gameSize)
     
 
 if __name__ == "__main__": 
